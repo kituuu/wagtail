@@ -112,6 +112,21 @@ describe('UnsavedController', () => {
       expect(events['w-unsaved:add']).toHaveLength(1);
       expect(events['w-unsaved:add'][0]).toHaveProperty('detail.type', 'edits');
     });
+    it('should fire an event when an input is removed', async () => {
+      expect(events['w-unsaved:add']).toHaveLength(0);
+
+      const [controller] = await setup();
+
+      expect(events['w-unsaved:add']).toHaveLength(0);
+
+      const input = document.getElementById('name');
+      input.remove();
+
+      await jest.runAllTimersAsync();
+
+      expect(events['w-unsaved:add']).toHaveLength(1);
+      expect(events['w-unsaved:add'][0]).toHaveProperty('detail.type', 'edits');
+    });
   });
 
   describe('showing a confirmation message when exiting the browser tab', () => {

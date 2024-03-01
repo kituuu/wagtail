@@ -290,7 +290,8 @@ export class UnsavedController extends Controller<HTMLFormElement> {
 
       const isValidInputNode = (node) =>
         node.nodeType === node.ELEMENT_NODE &&
-        ['INPUT', 'TEXTAREA', 'SELECT'].includes(node.tagName);
+        (['INPUT', 'TEXTAREA', 'SELECT'].includes(node.tagName) ||
+          node.querySelector('input, textarea, select') !== null);
 
       const observer = new MutationObserver((mutationList) => {
         const hasMutationWithValidInputNode = mutationList.some(
